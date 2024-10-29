@@ -1,0 +1,40 @@
+services:
+
+  java_app:
+    container_name: java_app
+    image: ms-register-app:0.0.1
+    build: .
+    ports:
+      - '8888:8888'
+    environment:
+      DATABASE_URL: jdbc:postgresql://java_db:5432/bd_reclamo
+      DATABASE_USERNAME: 'gibbssonfarias'
+      DATABASE_PASSWORD: 'gibb246'
+      REDIS_HOST: 'redis'
+      REDIS_PORT: '6379'
+      DEBUG: 'true'
+      DEBUG_LEVEL: 'info'
+    depends_on:
+      - java_db
+      - redis
+
+  java_db:
+    container_name: java_db
+    image: postgres:latest
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: 'gibbssonfarias'
+      POSTGRES_PASSWORD: 'gibb246'
+      POSTGRES_DB: 'bd_reclamo'
+
+  redis:
+    container_name: redis
+    image: redis:latest
+    ports:
+      - '6379:6379'
+
+
+
+
+
